@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button, List, ListItem, ListItemText } from '@material-ui/core';
+
+import { Button, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { fetchEvents } from '../../redux/slice/event';
 import { AppDispatch, RootState } from '../../redux/store';
 
-export const Events: React.FC = () => {
+export const Events = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const events = useSelector((state: RootState) => state.events.events);
+  const events = useSelector((state: RootState) => state?.events.events);
   const loading = useSelector((state: RootState) => state.events.loading);
 
   useEffect(() => {
@@ -17,8 +18,11 @@ export const Events: React.FC = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
-      <h1>Event List</h1>
+    <>
+      <Typography variant="h4" component="h2">
+        Event List
+      </Typography>
+
       <List>
         {events.map((event) => (
           <ListItem key={event.id} component={Link} to={`/event/${event.id}`}>
@@ -29,6 +33,6 @@ export const Events: React.FC = () => {
       <Button component={Link} to="/add" variant="contained" color="primary">
         Add Event
       </Button>
-    </div>
+    </>
   );
 };
