@@ -1,4 +1,6 @@
 import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 
 let events = [
   {
@@ -104,8 +106,9 @@ let events = [
 ];
 
 let nextEventId = events.length + 1;
-
 const app = express();
+dotenv.config();
+app.use(cors());
 app.use(express.json());
 
 app.get("/api/events", (req, res) => {
@@ -161,6 +164,8 @@ app.delete("/api/events/:id", (req, res) => {
   res.json({ message: "Event deleted successfully" });
 });
 
-app.listen(5000, () => {
-  console.log("Mock server running on http://localhost:5000");
+app.listen(process.env.REACT_APP_SERVER_MOCK_PORT, () => {
+  console.log(
+    `Mock server running on http://localhost:${process.env.REACT_APP_SERVER_MOCK_PORT}`
+  );
 });
