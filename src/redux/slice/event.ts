@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import type { EventItem } from "../../types/event";
-import axios from "axios";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import type { EventItem } from '../../types/event';
 
 interface EventsState {
   events: EventItem[];
@@ -14,15 +14,15 @@ const initialState: EventsState = {
   error: null,
 };
 
-export const fetchEvents = createAsyncThunk("events/fetchEvents", async () => {
+export const fetchEvents = createAsyncThunk('events/fetchEvents', async () => {
   const response = await axios.get(
-    `http://localhost:${process.env.REACT_APP_SERVER_MOCK_PORT}/api/events`
+    `http://localhost:${process.env.REACT_APP_SERVER_MOCK_PORT}/api/events`,
   );
   return response.data;
 });
 
 const eventsSlice = createSlice({
-  name: "events",
+  name: 'events',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -36,7 +36,7 @@ const eventsSlice = createSlice({
       })
       .addCase(fetchEvents.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || "Failed to fetch events";
+        state.error = action.error.message || 'Failed to fetch events';
       });
   },
 });

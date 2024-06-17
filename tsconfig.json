@@ -16,10 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src",
-    "../server.mjs",
-    "server/data/events.ts",
-    "server/types/events.ts"
-  ]
+  "include": ["src", "../server.mjs", "server/data/events.ts", "server/types/events.ts"]
 }

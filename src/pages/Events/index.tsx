@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchEvents } from "../../redux/slice/event";
-import { AppDispatch, RootState } from "../../redux/store";
-import { Link } from "react-router-dom";
-import { Button, List, ListItem, ListItemText } from "@material-ui/core";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Button, List, ListItem, ListItemText } from '@material-ui/core';
+import { fetchEvents } from '../../redux/slice/event';
+import { AppDispatch, RootState } from '../../redux/store';
 
 export const Events: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
