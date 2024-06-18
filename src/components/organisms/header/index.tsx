@@ -3,7 +3,7 @@ import { FC } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { Logo } from '../../atoms';
-import { Nav } from '../../molecules/Nav';
+import { Nav } from '../../molecules';
 
 export const Header: FC = () => {
   const theme = useTheme();
