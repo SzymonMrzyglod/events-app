@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import {
   Button,
   Card,
@@ -8,6 +8,7 @@ import {
   Typography,
   Stack,
   Chip,
+  Divider,
 } from '@mui/material';
 import { PlaceOutlined, CalendarMonthOutlined } from '@mui/icons-material';
 import { format } from 'date-fns';
@@ -16,8 +17,13 @@ import routeRoutes from '../../../routes/routes';
 import { DATETIME_FORMAT } from '../../../utils/dates';
 import { EventItem } from '../../../types/event';
 import { oneLineText } from '../../../theme/mixins';
+import { ConfirmModal } from '../ConfirmModal';
 
-export const EventCard: FC<Omit<EventItem, 'phone' | 'email'>> = ({
+interface EventCardProps extends Omit<EventItem, 'phone' | 'email'> {
+  onDelete: (id: number) => void;
+}
+
+export const EventCard: FC<EventCardProps> = ({
   id,
   title,
   image,
@@ -25,8 +31,15 @@ export const EventCard: FC<Omit<EventItem, 'phone' | 'email'>> = ({
   description,
   location,
   type,
+  onDelete,
 }) => {
   const navigate = useNavigate();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const handleDelete = () => {
+    onDelete(id);
+    setShowConfirmModal(false);
+  };
+
   return (
     <Card sx={{ maxWidth: 345, position: 'relative' }}>
       <CardMedia sx={{ height: 140 }} image={image} title={title} />
@@ -34,6 +47,7 @@ export const EventCard: FC<Omit<EventItem, 'phone' | 'email'>> = ({
         <Typography gutterBottom variant="h5" sx={oneLineText}>
           {title}
         </Typography>
+        <Divider sx={{ marginBottom: '8px' }} />
         <Stack direction="row" spacing={1} alignItems="center">
           <PlaceOutlined color="primary" />
           <Typography variant="body2">{location}</Typography>
@@ -54,11 +68,21 @@ export const EventCard: FC<Omit<EventItem, 'phone' | 'email'>> = ({
           {description}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Button size="small" onClick={() => navigate(`${routeRoutes.events}/${id}`)}>
           Show More
         </Button>
+        <Button size="small" onClick={() => setShowConfirmModal(true)} color="error">
+          Delete event
+        </Button>
       </CardActions>
+      <ConfirmModal
+        isOpen={showConfirmModal}
+        onClose={() => setShowConfirmModal(false)}
+        onConfirm={handleDelete}
+        title={title}
+        description="Are you sure you want to delete the event?"
+      />
     </Card>
   );
 };

@@ -8,7 +8,7 @@ let events = [
     title: 'Football Match',
     date: '2024-07-01T18:00',
     description:
-      'Local football match. Local football match. Local football match. Local football match. Local football match. Local football match. Local football match. Local football match.',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque consequat, velit eu accumsan vehicula, purus dolor hendrerit ipsum, vel vulputate purus mi non felis. Sed eu ligula in odio hendrerit convallis ut in lacus. Vestibulum at lectus aliquet, auctor justo id, semper arcu. Curabitur accumsan ac augue id vulputate. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam hendrerit velit viverra nulla tempus, vel tincidunt tellus vestibulum. Duis pulvinar, justo a ultrices maximus, sem ligula dictum leo, molestie dictum magna mi et odio. Phasellus imperdiet nec ex nec dignissim. Nulla egestas nulla at orci egestas, accumsan ultrices tortor posuere. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque consequat, velit eu accumsan vehicula, purus dolor hendrerit ipsum, vel vulputate purus mi non felis. Sed eu ligula in odio hendrerit convallis ut in lacus. Vestibulum at lectus aliquet, auctor justo id, semper arcu. Curabitur accumsan ac augue id vulputate. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam hendrerit velit viverra nulla tempus, vel tincidunt tellus vestibulum. Duis pulvinar, justo a ultrices maximus, sem ligula dictum leo, molestie dictum magna mi et odio. Phasellus imperdiet nec ex nec dignissim. Nulla egestas nulla at orci egestas, accumsan ultrices tortor posuere.',
     type: 'Sport',
     phone: '123456789',
     email: 'contact@example.com',
@@ -176,5 +176,5 @@ app.delete('/api/events/:id', (req, res) => {
 });
 
 app.listen(process.env.REACT_APP_SERVER_MOCK_PORT, () => {
-  console.log(`Mock server running on http://localhost:${process.env.REACT_APP_SERVER_MOCK_PORT}`);
+  console.log(`Mock server running on ${process.env.REACT_APP_SERVER_MOCK_URL}`);
 });
