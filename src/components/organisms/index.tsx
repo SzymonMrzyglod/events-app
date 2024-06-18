@@ -1,3 +1,3 @@
-import { Header } from './Header';
+import { SiteHeader } from './Header';
 
-export { Header };
+export { SiteHeader };

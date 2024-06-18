@@ -15,7 +15,7 @@ interface NavProps {
   isDesktop?: boolean;
 }
 
-export const Nav: FC<NavProps> = ({ isDesktop }) => {
+export const Navigation: FC<NavProps> = ({ isDesktop }) => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
