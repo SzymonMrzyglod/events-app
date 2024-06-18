@@ -4,15 +4,16 @@ import { Link } from 'react-router-dom';
 import { Button, Typography, Grid, Stack, Pagination, CircularProgress } from '@mui/material';
 import Box from '@mui/material/Box';
 import { compareAsc, parseISO } from 'date-fns';
-import { usePagination } from '../../hooks/usePagination';
-import { AppDispatch, RootState } from '../../redux/store';
-import { fetchEvents } from '../../redux/slice/event';
-import { EventItem } from '../../types/event';
-import { EventCard } from '../../components/molecules';
+import { usePagination } from '../../../hooks/usePagination';
+import { AppDispatch, RootState } from '../../../redux/store';
+import { deleteEvent, fetchEvents } from '../../../redux/slice/event';
+import { EventItem } from '../../../types/event';
+import { EventCard } from '../../../components/molecules';
 
 export const Events: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const events = useSelector((state: RootState) => state?.events.events);
+  const eventsFetched = useSelector((state: RootState) => state.events.eventsFetched);
   const loading = useSelector((state: RootState) => state.events.loading);
 
   const sortedEvents = events
@@ -25,9 +26,15 @@ export const Events: FC = () => {
   });
   const paginatedEvents = paginatedItems(sortedEvents);
 
+  const handleDeleteEvent = (id: number) => {
+    dispatch(deleteEvent(id));
+  };
+
   useEffect(() => {
-    dispatch(fetchEvents());
-  }, [dispatch]);
+    if (!eventsFetched) {
+      dispatch(fetchEvents());
+    }
+  }, [dispatch, events.length]);
 
   if (loading) return <CircularProgress />;
   return (
@@ -53,6 +60,7 @@ export const Events: FC = () => {
                 location={location}
                 image={image}
                 type={type}
+                onDelete={() => handleDeleteEvent(id)}
               />
             </Grid>
           );
