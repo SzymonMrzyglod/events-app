@@ -1,17 +1,8 @@
-import {
-  MenuItem,
-  Container,
-  Menu,
-  Typography,
-  IconButton,
-  Toolbar,
-  Box,
-  AppBar,
-} from '@mui/material';
-import { Menu as MenuIcon, CelebrationOutlined } from '@mui/icons-material';
+import { MenuItem, Menu, IconButton, Box } from '@mui/material';
+import { Menu as MenuIcon } from '@mui/icons-material';
 import { FC, useState, MouseEvent } from 'react';
 import routeRoutes from '../../../routes/routes';
-import { Link, Logo } from '../../atoms';
+import { Link } from '../../atoms';
 import { LinkProp } from '../../../types/page';
 
 const pages: LinkProp[] = [
@@ -24,7 +15,7 @@ interface NavProps {
   isDesktop?: boolean;
 }
 
-export const Nav: FC<NavProps> = ({ isDesktop }) => {
+export const Navigation: FC<NavProps> = ({ isDesktop }) => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {

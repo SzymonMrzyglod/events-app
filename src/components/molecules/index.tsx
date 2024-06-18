@@ -1,4 +1,4 @@
-import { Nav } from './Nav';
 import { EventCard } from './EventCard';
+import { Navigation } from './Navigation';
 
-export { Nav, EventCard };
+export { Navigation, EventCard };

@@ -3,7 +3,7 @@ import { FC } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { Logo } from '../../atoms';
-import { Nav } from '../../molecules/Nav';
+import { Navigation } from '../../molecules';
 
 export const Header: FC = () => {
   const theme = useTheme();
@@ -16,11 +16,11 @@ export const Header: FC = () => {
           {desktopView ? (
             <>
               <Logo isDesktop />
-              <Nav isDesktop />
+              <Navigation isDesktop />
             </>
           ) : (
             <>
-              <Nav />
+              <Navigation />
               <Logo />
             </>
           )}
