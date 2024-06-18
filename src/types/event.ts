@@ -3,6 +3,7 @@ export interface EventItem {
   title: string;
   date: string;
   description: string;
+  image: string;
   type: string;
   phone: string;
   email: string;
