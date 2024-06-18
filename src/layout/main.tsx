@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { Container } from '@mui/material';
-import { SiteHeader } from '../components/organisms';
+import { Header } from '../components/organisms';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -8,7 +8,7 @@ interface MainLayoutProps {
 
 export const MainLayout: FC<MainLayoutProps> = ({ children }) => (
   <>
-    <SiteHeader />
+    <Header />
     <main>
       <Container maxWidth="xl">{children}</Container>
     </main>

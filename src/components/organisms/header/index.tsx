@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import { Logo } from '../../atoms';
 import { Navigation } from '../../molecules';
 
-export const SiteHeader: FC = () => {
+export const Header: FC = () => {
   const theme = useTheme();
   const desktopView = useMediaQuery(theme.breakpoints.up('md'));
 
