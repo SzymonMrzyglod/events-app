@@ -12,5 +12,5 @@ const StyledErrorMessage = styled(ErrorMessage)(({ theme }) => ({
 }));
 
 export const FormErrorMessage: FC<FormErrorMessageProps> = ({ name }) => (
-  <StyledErrorMessage name={name} component="div" />
+  <StyledErrorMessage name={name} component="div" data-testid="error-message" />
 );
