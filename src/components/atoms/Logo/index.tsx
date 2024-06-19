@@ -10,12 +10,14 @@ interface LogoProps {
 export const Logo: FC<LogoProps> = ({ isDesktop }) => (
   <>
     <CelebrationOutlined
+      data-testid="logo-icon"
       sx={{
         display: { xs: isDesktop ? 'none' : 'flex', md: isDesktop ? 'flex' : 'none' },
         mr: 1,
       }}
     />
     <Typography
+      data-testid="logo-text"
       variant={isDesktop ? 'h6' : 'h5'}
       noWrap
       component="a"

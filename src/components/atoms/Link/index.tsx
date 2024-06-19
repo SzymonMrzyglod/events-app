@@ -15,7 +15,7 @@ const StyledLink = styled(RouterLink)(({ theme }) => ({
 }));
 
 export const Link: FC<LinkProp> = ({ href, name }) => (
-  <StyledLink to={href}>
+  <StyledLink to={href} data-testid="link">
     <Typography>{name}</Typography>
   </StyledLink>
 );
