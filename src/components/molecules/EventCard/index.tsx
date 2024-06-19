@@ -20,7 +20,7 @@ import { oneLineText } from '../../../theme/mixins';
 import { ConfirmModal } from '../ConfirmModal';
 import { getImagePath } from '../../../utils/imagePath';
 
-interface EventCardProps extends Omit<EventItem, 'phone' | 'email'> {
+export interface EventCardProps extends Omit<EventItem, 'phone' | 'email'> {
   onDelete: (id: number) => void;
 }
 
