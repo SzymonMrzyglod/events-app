@@ -9,7 +9,7 @@ import multer from 'multer';
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, 'public/uploads/'); // Katalog, do którego zapisywane są przesyłane pliki
+    cb(null, 'public/uploads/');
   },
   filename(req, file, cb) {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
@@ -153,22 +153,6 @@ app.get('/api/events/:id', (req, res) => {
   }
 });
 
-// app.post('/api/events', (req, res) => {
-//   const newEvent = {
-//     id: nextEventId++,
-//     title: req.body.title,
-//     date: req.body.date,
-//     description: req.body.description,
-//     type: req.body.type,
-//     phone: req.body.phone,
-//     email: req.body.email,
-//     location: req.body.location,
-//   };
-
-//   events.push(newEvent);
-
-//   res.status(201).json(newEvent);
-// });
 app.post('/api/events', upload.single('image'), (req, res) => {
   const newEvent = {
     id: nextEventId++,
@@ -179,7 +163,6 @@ app.post('/api/events', upload.single('image'), (req, res) => {
     phone: req.body.phone,
     email: req.body.email,
     location: req.body.location,
-    // Dodanie ścieżki do przesyłanego pliku (jeśli został przesłany)
     image: req.file ? req.file.path : null,
   };
 
