@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, Typography, Grid, Stack, Pagination, CircularProgress } from '@mui/material';
 import Box from '@mui/material/Box';
 import { compareAsc, parseISO } from 'date-fns';
+import { Helmet } from 'react-helmet';
 import { usePagination } from '../../../hooks/usePagination';
 import { AppDispatch, RootState } from '../../../redux/store';
 import { deleteEvent, fetchEvents } from '../../../redux/slice/event';
@@ -39,42 +40,48 @@ export const Events: FC = () => {
 
   if (loading) return <CircularProgress />;
   return (
-    <Box component="section" sx={{ p: 4 }}>
-      <Stack direction="row" spacing={2} alignItems="center">
-        <Typography variant="h4" component="h2" sx={{ p: 2 }}>
-          Event List
-        </Typography>
-        <Button component={Link} to={routeRoutes.addEvent} variant="outlined">
-          Add Event
-        </Button>
-      </Stack>
-      <Grid container spacing={4}>
-        {paginatedEvents.map((event) => {
-          const { id, title, date, description, image, type, location } = event;
-          return (
-            <Grid item key={id} xs={12} sm={6} md={4}>
-              <EventCard
-                id={id}
-                title={title}
-                date={date}
-                description={description}
-                location={location}
-                image={image}
-                type={type}
-                onDelete={() => handleDeleteEvent(id)}
-              />
-            </Grid>
-          );
-        })}
-      </Grid>
-      <Stack spacing={2} sx={{ mt: 4 }}>
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={(event, page) => handlePageChange(page)}
-          color="primary"
-        />
-      </Stack>
-    </Box>
+    <>
+      <Helmet>
+        ‍<title>Events</title>‍
+        <meta name="description" content="Find the best events in your area" />
+      </Helmet>
+      <Box component="section" sx={{ p: 4 }}>
+        <Stack direction="row" spacing={2} alignItems="center">
+          <Typography variant="h4" component="h2" sx={{ p: 2 }}>
+            Event List
+          </Typography>
+          <Button component={Link} to={routeRoutes.addEvent} variant="outlined">
+            Add Event
+          </Button>
+        </Stack>
+        <Grid container spacing={4}>
+          {paginatedEvents.map((event) => {
+            const { id, title, date, description, image, type, location } = event;
+            return (
+              <Grid item key={id} xs={12} sm={6} md={4}>
+                <EventCard
+                  id={id}
+                  title={title}
+                  date={date}
+                  description={description}
+                  location={location}
+                  image={image}
+                  type={type}
+                  onDelete={() => handleDeleteEvent(id)}
+                />
+              </Grid>
+            );
+          })}
+        </Grid>
+        <Stack spacing={2} sx={{ mt: 4 }}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(event, page) => handlePageChange(page)}
+            color="primary"
+          />
+        </Stack>
+      </Box>
+    </>
   );
 };

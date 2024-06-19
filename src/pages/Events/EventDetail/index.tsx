@@ -16,6 +16,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { Phone, Email, ArrowBackIos } from '@mui/icons-material';
 import { format } from 'date-fns';
+import { Helmet } from 'react-helmet';
 import { fetchEventById } from '../../../redux/slice/event';
 import { AppDispatch, RootState } from '../../../redux/store';
 import { DATETIME_FORMAT } from '../../../utils/dates';
@@ -49,6 +50,10 @@ export const EventDetail: React.FC = () => {
 
   return (
     <>
+      <Helmet>
+        ‍<title>Event</title>‍
+        <meta name="description" content="Event information" />
+      </Helmet>
       <Button
         variant="text"
         onClick={() => navigate(routeRoutes.events)}
