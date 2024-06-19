@@ -47,7 +47,7 @@ jobs:
     strategy:
       matrix:
         node: [20]
-    name: TypeScript test ${{ matrix.node }}
+    name: Tests ${{ matrix.node }}
 
     steps:
       - uses: actions/checkout@v2
