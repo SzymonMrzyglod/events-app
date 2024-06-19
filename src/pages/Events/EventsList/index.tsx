@@ -9,12 +9,13 @@ import { AppDispatch, RootState } from '../../../redux/store';
 import { deleteEvent, fetchEvents } from '../../../redux/slice/event';
 import { EventItem } from '../../../types/event';
 import { EventCard } from '../../../components/molecules';
+import routeRoutes from '../../../routes/routes';
 
 export const Events: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const events = useSelector((state: RootState) => state?.events.events);
-  const eventsFetched = useSelector((state: RootState) => state.events.eventsFetched);
-  const loading = useSelector((state: RootState) => state.events.loading);
+  const events = useSelector((state: RootState) => state?.events?.events);
+  const eventsFetched = useSelector((state: RootState) => state?.events?.eventsFetched);
+  const loading = useSelector((state: RootState) => state?.events?.loading);
 
   const sortedEvents = events
     .slice()
@@ -43,7 +44,7 @@ export const Events: FC = () => {
         <Typography variant="h4" component="h2" sx={{ p: 2 }}>
           Event List
         </Typography>
-        <Button component={Link} to="/add" variant="outlined">
+        <Button component={Link} to={routeRoutes.addEvent} variant="outlined">
           Add Event
         </Button>
       </Stack>

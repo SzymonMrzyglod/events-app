@@ -18,6 +18,7 @@ import { DATETIME_FORMAT } from '../../../utils/dates';
 import { EventItem } from '../../../types/event';
 import { oneLineText } from '../../../theme/mixins';
 import { ConfirmModal } from '../ConfirmModal';
+import { getImagePath } from '../../../utils/imagePath';
 
 interface EventCardProps extends Omit<EventItem, 'phone' | 'email'> {
   onDelete: (id: number) => void;
@@ -42,7 +43,7 @@ export const EventCard: FC<EventCardProps> = ({
 
   return (
     <Card sx={{ maxWidth: 345, position: 'relative' }}>
-      <CardMedia sx={{ height: 140 }} image={image} title={title} />
+      <CardMedia sx={{ height: 140 }} image={getImagePath(image)} title={title} />
       <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
         <Typography gutterBottom variant="h5" sx={oneLineText}>
           {title}

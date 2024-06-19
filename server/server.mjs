@@ -1,6 +1,23 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-console */
+/* eslint-disable max-len */
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import multer from 'multer';
+
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, 'public/uploads/'); // Katalog, do którego zapisywane są przesyłane pliki
+  },
+  filename(req, file, cb) {
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    cb(null, `${uniqueSuffix}-${file.originalname}`); // Nadanie unikalnej nazwy pliku
+  },
+});
+
+const upload = multer({ storage });
 
 let events = [
   {
@@ -20,7 +37,7 @@ let events = [
     title: 'Concert',
     date: '2024-08-05T20:00',
     description: 'Outdoor concert in the park.',
-    type: 'Music',
+    type: 'Culture',
     phone: '987654321',
     email: 'music@example.com',
     location: 'Central Park',
@@ -31,7 +48,7 @@ let events = [
     title: 'Art Exhibition',
     date: '2024-09-15T10:00',
     description: 'Exhibition of modern art.',
-    type: 'Art',
+    type: 'Culture',
     phone: '234567890',
     email: 'art@example.com',
     location: 'Art Gallery',
@@ -53,7 +70,7 @@ let events = [
     title: 'Theater Play',
     date: '2024-11-20T19:00',
     description: 'Classic play performance.',
-    type: 'Theater',
+    type: 'Culture',
     phone: '456789012',
     email: 'theater@example.com',
     location: 'Main Theater',
@@ -64,7 +81,7 @@ let events = [
     title: 'Food Festival',
     date: '2024-12-01T12:00',
     description: 'Local food festival with various cuisines.',
-    type: 'Food',
+    type: 'Culture',
     phone: '567890123',
     email: 'food@example.com',
     location: 'Downtown',
@@ -72,10 +89,10 @@ let events = [
   },
   {
     id: 7,
-    title: 'Tech Conference',
+    title: 'Health Conference',
     date: '2025-01-15T09:00',
-    description: 'Conference on the latest tech trends.',
-    type: 'Conference',
+    description: 'Conference on the latest health trends.',
+    type: 'Health',
     phone: '678901234',
     email: 'tech@example.com',
     location: 'Convention Center',
@@ -86,7 +103,7 @@ let events = [
     title: 'Charity Run',
     date: '2025-02-20T08:00',
     description: 'Run for a charity cause.',
-    type: 'Charity',
+    type: 'Sport',
     phone: '789012345',
     email: 'charity@example.com',
     location: 'City Park',
@@ -97,7 +114,7 @@ let events = [
     title: 'Science Fair',
     date: '2025-03-10T10:00',
     description: 'Annual science fair for students.',
-    type: 'Education',
+    type: 'Culture',
     phone: '890123456',
     email: 'science@example.com',
     location: 'Exhibition Hall',
@@ -108,7 +125,7 @@ let events = [
     title: 'Book Fair',
     date: '2025-04-05T09:00',
     description: 'Fair showcasing books from various genres.',
-    type: 'Literature',
+    type: 'Culture',
     phone: '901234567',
     email: 'books@example.com',
     location: 'Library',
@@ -127,7 +144,7 @@ app.get('/api/events', (req, res) => {
 });
 
 app.get('/api/events/:id', (req, res) => {
-  const eventId = parseInt(req.params.id);
+  const eventId = parseInt(req.params.id, 10);
   const event = events.find((event) => event.id === eventId);
   if (event) {
     res.json(event);
@@ -136,7 +153,23 @@ app.get('/api/events/:id', (req, res) => {
   }
 });
 
-app.post('/api/events', (req, res) => {
+// app.post('/api/events', (req, res) => {
+//   const newEvent = {
+//     id: nextEventId++,
+//     title: req.body.title,
+//     date: req.body.date,
+//     description: req.body.description,
+//     type: req.body.type,
+//     phone: req.body.phone,
+//     email: req.body.email,
+//     location: req.body.location,
+//   };
+
+//   events.push(newEvent);
+
+//   res.status(201).json(newEvent);
+// });
+app.post('/api/events', upload.single('image'), (req, res) => {
   const newEvent = {
     id: nextEventId++,
     title: req.body.title,
@@ -146,6 +179,8 @@ app.post('/api/events', (req, res) => {
     phone: req.body.phone,
     email: req.body.email,
     location: req.body.location,
+    // Dodanie ścieżki do przesyłanego pliku (jeśli został przesłany)
+    image: req.file ? req.file.path : null,
   };
 
   events.push(newEvent);
@@ -154,7 +189,7 @@ app.post('/api/events', (req, res) => {
 });
 
 app.put('/api/events/:id', (req, res) => {
-  const eventId = parseInt(req.params.id);
+  const eventId = parseInt(req.params.id, 10);
   const updatedEvent = req.body;
 
   events = events.map((event) => {
@@ -168,7 +203,7 @@ app.put('/api/events/:id', (req, res) => {
 });
 
 app.delete('/api/events/:id', (req, res) => {
-  const eventId = parseInt(req.params.id);
+  const eventId = parseInt(req.params.id, 10);
 
   events = events.filter((event) => event.id !== eventId);
 
