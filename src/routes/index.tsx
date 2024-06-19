@@ -4,9 +4,10 @@ import { EventDetail, Events, Home } from '../pages';
 import routes from './routes';
 import { MainLayout } from '../layout/main';
 import { Calendar } from '../pages/Calendar';
+import { AddEvent } from '../pages/Events/AddEvent';
 
 export const Routes: FC<PropsWithChildren> = ({ children }): ReactElement => {
-  const { home, events, event, calendar } = routes;
+  const { home, events, event, addEvent, calendar } = routes;
 
   return (
     <BrowserRouter>
@@ -16,6 +17,7 @@ export const Routes: FC<PropsWithChildren> = ({ children }): ReactElement => {
             <Route path={home} element={<Home />} />
             <Route path={events} element={<Events />} />
             <Route path={event} element={<EventDetail />} />
+            <Route path={addEvent} element={<AddEvent />} />
             <Route path={calendar} element={<Calendar />} />
           </Switch>
         </MainLayout>

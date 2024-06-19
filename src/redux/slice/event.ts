@@ -28,6 +28,17 @@ export const fetchEventById = createAsyncThunk('events/fetchEventById', async (i
   return response.data;
 });
 
+export const addEvent = createAsyncThunk(
+  'events/addEvent',
+  async (formData: FormData, { rejectWithValue }) => {
+    const response = await axios.post(
+      `${process.env.REACT_APP_SERVER_MOCK_URL}/api/events`,
+      formData,
+    );
+    return response.data;
+  },
+);
+
 export const deleteEvent = createAsyncThunk('events/deleteEvent', async (id: number) => {
   await axios.delete(`${process.env.REACT_APP_SERVER_MOCK_URL}/api/events/${id}`);
   return id;
@@ -62,7 +73,18 @@ const eventsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'Failed to fetch event';
       })
-
+      .addCase(addEvent.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addEvent.fulfilled, (state, action: PayloadAction<EventItem>) => {
+        state.loading = false;
+        state.eventsFetched = false;
+        state.events.push(action.payload);
+      })
+      .addCase(addEvent.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to add event';
+      })
       .addCase(deleteEvent.fulfilled, (state, action: PayloadAction<number>) => {
         state.events = state.events.filter((event) => event.id !== action.payload);
       });

@@ -20,6 +20,7 @@ import { fetchEventById } from '../../../redux/slice/event';
 import { AppDispatch, RootState } from '../../../redux/store';
 import { DATETIME_FORMAT } from '../../../utils/dates';
 import routeRoutes from '../../../routes/routes';
+import { getImagePath } from '../../../utils/imagePath';
 
 export const EventDetail: React.FC = () => {
   const theme = useTheme();
@@ -108,11 +109,12 @@ export const EventDetail: React.FC = () => {
           </Box>
           <CardMedia
             component="img"
-            image={event.image}
+            image={getImagePath(event.image)}
             alt={event.title}
             sx={{
               width: isDesktop ? '50%' : '100%',
               height: 'auto',
+              maxHeight: '70vh',
               objectFit: 'cover',
               flex: '0 0 auto',
             }}
