@@ -86,8 +86,7 @@ export const AddEvent: React.FC = () => {
                 select
                 options={Object.values(EventTypes)}
               />
-
-              <FormField name="phone" type="text" label="Phone" />
+              <FormField name="phone" type="tel" label="Phone" />
               <FormField name="email" type="email" label="Email" />
               <FormField name="location" type="text" label="Location" />
               <ImageUpload

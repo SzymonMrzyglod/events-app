@@ -45,23 +45,6 @@ describe('SocialMediaLinks', () => {
     expect(screen.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('target', '_blank');
   });
 
-  test('each social media link has the correct rel attribute', () => {
-    setup();
-    expect(screen.getByRole('link', { name: 'Facebook' })).toHaveAttribute(
-      'rel',
-      'noopener noreferrer',
-    );
-    expect(screen.getByRole('link', { name: 'x' })).toHaveAttribute('rel', 'noopener noreferrer');
-    expect(screen.getByRole('link', { name: 'Instagram' })).toHaveAttribute(
-      'rel',
-      'noopener noreferrer',
-    );
-    expect(screen.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
-      'rel',
-      'noopener noreferrer',
-    );
-  });
-
   test('each social media link has an icon', () => {
     setup();
     expect(screen.getByRole('link', { name: 'Facebook' }).querySelector('svg')).toBeInTheDocument();

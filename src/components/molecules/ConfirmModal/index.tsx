@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import { FC } from 'react';
 
-interface ConfirmModalProps {
+export interface ConfirmModalProps {
   isOpen: boolean;
   title: string;
   description: string;

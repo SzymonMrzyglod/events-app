@@ -9,7 +9,7 @@ const linkProps = {
 };
 
 describe('Link component', () => {
-  test('should render link with correct styles and content', async () => {
+  test('should render link with correct styles', async () => {
     render(
       <Wrapper>
         <Link name={linkProps.name} href={linkProps.href} />

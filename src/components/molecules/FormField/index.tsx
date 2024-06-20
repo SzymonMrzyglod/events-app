@@ -1,12 +1,12 @@
-import { Field, ErrorMessage } from 'formik';
+import { Field } from 'formik';
 import { TextField, MenuItem } from '@mui/material';
-import { FC } from 'react';
+import { FC, HTMLInputTypeAttribute } from 'react';
 import { FormErrorMessage } from '../../atoms';
 
 interface FormFieldProps {
   name: string;
   label?: string;
-  type?: 'text' | 'datetime-local' | 'select' | 'email';
+  type?: HTMLInputTypeAttribute;
   select?: boolean;
   options?: string[];
   multiline?: boolean;
@@ -26,7 +26,7 @@ export const FormField: FC<FormFieldProps> = ({
     <Field
       name={name}
       type={type}
-      as={select ? TextField : TextField}
+      as={TextField}
       select={select}
       label={label}
       fullWidth
