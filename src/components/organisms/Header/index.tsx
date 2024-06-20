@@ -10,7 +10,7 @@ export const Header: FC = () => {
   const desktopView = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
-    <AppBar position="static" data-testid="header">
+    <AppBar position="sticky" data-testid="header">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {desktopView ? (

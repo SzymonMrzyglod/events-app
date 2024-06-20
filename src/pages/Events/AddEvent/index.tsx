@@ -1,30 +1,60 @@
 import React from 'react';
-import { Formik, Field, Form } from 'formik';
-import { Button, TextField, MenuItem, Card, Typography, Stack } from '@mui/material';
+import { Formik, Form } from 'formik';
+import { Button, Card, Typography, Stack } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { FormikHelpers } from 'formik/dist/types';
+import { toast } from 'react-toastify';
 import { addEventSchema } from '../../../formSchema/addEventSchema';
-import { ImageUpload } from '../../../components/molecules';
+import { FormField, ImageUpload } from '../../../components/molecules';
 import { addEvent } from '../../../redux/slice/event';
 import { AppDispatch } from '../../../redux/store';
-import { FormErrorMessage } from '../../../components/atoms';
-import { EventTypes } from '../../../types/event';
+import { EventItem, EventTypes } from '../../../types/event';
 import routeRoutes from '../../../routes/routes';
+
+interface AddEventFormProps extends Omit<EventItem, 'id'> {}
 
 export const AddEvent: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const initialValues = {
+
+  const initialValues: AddEventFormProps = {
     title: '',
     date: '',
     description: '',
-    type: '',
+    type: EventTypes.Culture,
     phone: '',
     email: '',
     location: '',
-    image: null,
+    image: '',
   };
+
+  const handleSubmit = async (
+    values: AddEventFormProps,
+    { setSubmitting, resetForm }: FormikHelpers<AddEventFormProps>,
+  ) => {
+    try {
+      const formData = new FormData();
+      Object.keys(values).forEach((key) => {
+        const value = values[key as keyof AddEventFormProps];
+        if (key === 'image') {
+          formData.append('image', value);
+        } else {
+          formData.append(key, value);
+        }
+      });
+
+      await dispatch(addEvent(formData));
+      resetForm();
+      navigate(routeRoutes.events);
+    } catch (error) {
+      toast.error('Error adding event');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -34,32 +64,7 @@ export const AddEvent: React.FC = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={addEventSchema}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          const formData = new FormData();
-          formData.append('title', values.title);
-          formData.append('date', values.date);
-          formData.append('description', values.description);
-          formData.append('type', values.type);
-          formData.append('phone', values.phone);
-          formData.append('email', values.email);
-          formData.append('location', values.location);
-
-          if (values.image) {
-            formData.append('image', values.image);
-          }
-
-          dispatch(addEvent(formData))
-            .then(() => {
-              resetForm();
-              navigate(routeRoutes.events);
-            })
-            .catch((error) => {
-              console.error('Error adding event:', error);
-            })
-            .finally(() => {
-              setSubmitting(false);
-            });
-        }}
+        onSubmit={handleSubmit}
       >
         {({ isSubmitting, setFieldValue }) => (
           <Card
@@ -71,62 +76,20 @@ export const AddEvent: React.FC = () => {
             <Typography variant="h5">Add new event!</Typography>
 
             <Form encType="multipart/form-data">
-              <Field
-                name="title"
-                type="text"
-                as={TextField}
-                label="Title"
-                fullWidth
-                margin="normal"
+              <FormField name="title" label="Title" />
+              <FormField name="date" type="datetime-local" />
+              <FormField name="description" label="Description" multiline rows={4} />
+              <FormField
+                name="type"
+                type="select"
+                label="Type"
+                select
+                options={Object.values(EventTypes)}
               />
-              <FormErrorMessage name="title" />
-              <Field name="date" type="datetime-local" as={TextField} fullWidth margin="normal" />
-              <FormErrorMessage name="date" />
-              <Field
-                name="description"
-                as={TextField}
-                label="Description"
-                fullWidth
-                margin="normal"
-                multiline
-                rows={4}
-              />
-              <FormErrorMessage name="description" />
-              <Field name="type" as={TextField} select label="Type" fullWidth margin="normal">
-                {Object.values(EventTypes).map((option) => (
-                  <MenuItem key={option} value={option}>
-                    {option}
-                  </MenuItem>
-                ))}
-              </Field>
-              <FormErrorMessage name="type" />
-              <Field
-                name="phone"
-                type="text"
-                as={TextField}
-                label="Phone"
-                fullWidth
-                margin="normal"
-              />
-              <FormErrorMessage name="phone" />
-              <Field
-                name="email"
-                type="email"
-                as={TextField}
-                label="Email"
-                fullWidth
-                margin="normal"
-              />
-              <FormErrorMessage name="email" />
-              <Field
-                name="location"
-                type="text"
-                as={TextField}
-                label="Location"
-                fullWidth
-                margin="normal"
-              />
-              <FormErrorMessage name="location" />
+
+              <FormField name="phone" type="text" label="Phone" />
+              <FormField name="email" type="email" label="Email" />
+              <FormField name="location" type="text" label="Location" />
               <ImageUpload
                 setFieldValue={setFieldValue}
                 resetField={() => setFieldValue('image', null)}
