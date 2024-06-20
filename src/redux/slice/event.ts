@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import type { EventItem } from '../../types/event';
 
 interface EventsState {
@@ -17,33 +18,53 @@ const initialState: EventsState = {
   loading: false,
   error: null,
 };
-
 export const fetchEvents = createAsyncThunk('events/fetchEvents', async () => {
-  const response = await axios.get(`${process.env.REACT_APP_SERVER_MOCK_URL}/api/events`);
-  return response.data;
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_MOCK_URL}/api/events`);
+    return response.data;
+  } catch (error) {
+    toast.error('Failed to fetch events');
+    throw error;
+  }
 });
 
 export const fetchEventById = createAsyncThunk('events/fetchEventById', async (id: number) => {
-  const response = await axios.get(`${process.env.REACT_APP_SERVER_MOCK_URL}/api/events/${id}`);
-  return response.data;
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_MOCK_URL}/api/events/${id}`);
+    return response.data;
+  } catch (error) {
+    toast.error('Failed to fetch event');
+    throw error;
+  }
 });
 
 export const addEvent = createAsyncThunk(
   'events/addEvent',
   async (formData: FormData, { rejectWithValue }) => {
-    const response = await axios.post(
-      `${process.env.REACT_APP_SERVER_MOCK_URL}/api/events`,
-      formData,
-    );
-    return response.data;
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_SERVER_MOCK_URL}/api/events`,
+        formData,
+      );
+      toast.success('Event added successfully!');
+      return response.data;
+    } catch (error) {
+      toast.error('Failed to add event');
+      throw error;
+    }
   },
 );
 
 export const deleteEvent = createAsyncThunk('events/deleteEvent', async (id: number) => {
-  await axios.delete(`${process.env.REACT_APP_SERVER_MOCK_URL}/api/events/${id}`);
-  return id;
+  try {
+    await axios.delete(`${process.env.REACT_APP_SERVER_MOCK_URL}/api/events/${id}`);
+    toast.success('The event has been removed from the list!');
+    return id;
+  } catch (error) {
+    toast.error('Failed to delete event');
+    throw error;
+  }
 });
-
 const eventsSlice = createSlice({
   name: 'events',
   initialState,
