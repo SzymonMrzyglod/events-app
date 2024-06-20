@@ -19,6 +19,7 @@ This is a web application for managing events. Users can add new events, view ex
 
   - React.js
   - React Router DOM for routing
+  - Atomic Design Methodology
   - Material-UI for UI components and styling
   - Formik and Yup for form handling and validation
   - Axios for HTTP requests
@@ -27,11 +28,15 @@ This is a web application for managing events. Users can add new events, view ex
   - React Toastify for displaying notifications
   - Jest and React Testing Library for testing
   - TypeScript for type safety
+  - EsLint and Prettier
 
 - **Backend:**
   - Express.js for API server
   - CORS for handling cross-origin requests
-  - Multer for handling file uploads
+  - Multer to support uploading files that are saved for testing purposes in public/uploads
+    
+- **CI/CD:**  
+![Zrzut ekranu 2024-06-20 o 11 15 29](https://github.com/SzymonMrzyglod/events-app/assets/62983152/83fc7fd4-5a63-4a21-b226-d6c36e33456b)
 
 ## Features
 
