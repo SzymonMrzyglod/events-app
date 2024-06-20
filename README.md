@@ -18,7 +18,7 @@ This is a web application for managing events. Users can add new events, view ex
 - **Frontend:**
 
   - React.js
-  - React Router DOM for routing
+  - React Router for routing
   - Atomic Design Methodology
   - Material-UI for UI components and styling
   - Formik and Yup for form handling and validation
