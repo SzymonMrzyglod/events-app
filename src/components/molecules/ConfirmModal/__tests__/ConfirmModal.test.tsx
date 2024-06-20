@@ -1,10 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { ConfirmModal } from '..';
+import { ConfirmModal, ConfirmModalProps } from '..';
 import Wrapper from '../../../../tests/wrapper';
 
 describe('ConfirmModal', () => {
-  const defaultProps = {
+  const defaultProps: ConfirmModalProps = {
     isOpen: true,
     title: 'Confirm Action',
     description: 'Are you sure you want to proceed?',
@@ -28,11 +28,7 @@ describe('ConfirmModal', () => {
   });
 
   test('should call onClose when the Disagree button is clicked', () => {
-    render(
-      <Wrapper>
-        <ConfirmModal {...defaultProps} />
-      </Wrapper>,
-    );
+    setup();
 
     fireEvent.click(screen.getByText('Disagree'));
     expect(defaultProps.onClose).toHaveBeenCalled();

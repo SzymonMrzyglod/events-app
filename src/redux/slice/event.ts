@@ -38,22 +38,19 @@ export const fetchEventById = createAsyncThunk('events/fetchEventById', async (i
   }
 });
 
-export const addEvent = createAsyncThunk(
-  'events/addEvent',
-  async (formData: FormData, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_SERVER_MOCK_URL}/api/events`,
-        formData,
-      );
-      toast.success('Event added successfully!');
-      return response.data;
-    } catch (error) {
-      toast.error('Failed to add event');
-      throw error;
-    }
-  },
-);
+export const addEvent = createAsyncThunk('events/addEvent', async (formData: FormData) => {
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_SERVER_MOCK_URL}/api/events`,
+      formData,
+    );
+    toast.success('Event added successfully!');
+    return response.data;
+  } catch (error) {
+    toast.error('Failed to add event');
+    throw error;
+  }
+});
 
 export const deleteEvent = createAsyncThunk('events/deleteEvent', async (id: number) => {
   try {
