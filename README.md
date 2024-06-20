@@ -28,7 +28,7 @@ This is a web application for managing events. Users can add new events, view ex
   - Jest and React Testing Library for testing
   - TypeScript for type safety
 
-- **Backend (not listed, assuming it's handled separately):**
+- **Backend:**
   - Express.js for API server
   - CORS for handling cross-origin requests
   - Multer for handling file uploads
